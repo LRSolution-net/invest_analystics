@@ -1,0 +1,42 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ── Custom scrollbar ── */
+::-webkit-scrollbar { width: 6px; height: 6px; }
+::-webkit-scrollbar-track { background: #111827; }
+::-webkit-scrollbar-thumb { background: #374151; border-radius: 3px; }
+::-webkit-scrollbar-thumb:hover { background: #4B5563; }
+
+/* ── Pulse dot for live signals ── */
+@keyframes pulse-ring {
+  0%   { transform: scale(0.8); opacity: 1; }
+  100% { transform: scale(2);   opacity: 0; }
+}
+.pulse-dot::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: 9999px;
+  animation: pulse-ring 1.5s cubic-bezier(0.215, 0.61, 0.355, 1) infinite;
+}
+
+/* ── Card gradient borders ── */
+.card-buy  { border-color: rgba(52, 211, 153, 0.4); box-shadow: 0 0 20px rgba(52, 211, 153, 0.08); }
+.card-sell { border-color: rgba(248, 113, 113, 0.4); box-shadow: 0 0 20px rgba(248, 113, 113, 0.08); }
+.card-neutral { border-color: rgba(55, 65, 81, 0.8); }
+
+/* ── Number counter animation ── */
+@keyframes count-up {
+  from { opacity: 0; transform: translateY(4px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+.animate-count { animation: count-up 0.4s ease-out forwards; }
+
+/* ── Gradient text ── */
+.text-gradient {
+  background: linear-gradient(135deg, #60A5FA 0%, #A78BFA 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}

@@ -1,0 +1,46 @@
+name: Deploy to GitHub Pages
+
+on:
+  push:
+    branches:
+      - main
+
+# Sets permissions of the GITHUB_TOKEN to allow deployment to GitHub Pages
+permissions:
+  contents: write
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      # 1. Checkout source code
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      # 2. Setup Node.js 18
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '18'
+          cache: 'npm'
+
+      # 3. Install dependencies (uses package-lock.json for reproducibility)
+      - name: Install dependencies
+        run: npm ci
+
+      # 4. Build the Vite app
+      #    The .env variables are injected as GitHub Secrets below.
+      - name: Build
+        run: npm run build
+        env:
+          VITE_SUPABASE_URL:       ${{ secrets.VITE_SUPABASE_URL }}
+          VITE_SUPABASE_ANON_KEY:  ${{ secrets.VITE_SUPABASE_ANON_KEY }}
+          VITE_ALPHA_VANTAGE_KEY:  ${{ secrets.VITE_ALPHA_VANTAGE_KEY }}
+
+      # 5. Deploy the dist/ folder to the gh-pages branch
+      - name: Deploy to GitHub Pages
+        uses: peaceiris/actions-gh-pages@v3
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir:  ./dist
