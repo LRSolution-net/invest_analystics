@@ -6,5 +6,5 @@ import react from '@vitejs/plugin-react';
 // Example: base: '/investment-market-analysis/'
 export default defineConfig({
   plugins: [react()],
-  base: '/investimentos/',
+  base: '/invest_analystics/',
 });
